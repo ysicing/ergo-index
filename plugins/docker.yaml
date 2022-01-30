@@ -1,0 +1,21 @@
+apiVersion: ergo.ysicing.me/v1alpha1
+kind: Plugin
+metadata:
+  name: docker
+spec:
+  homepage: https://get.docker.com/
+  description: "Docker CE for Linux installation script"
+  version: latest
+  type: shell
+  install: |
+    curl -fsSL https://get.docker.com -o get-docker.sh
+    sh get-docker.sh
+    rm get-docker.sh
+  platforms:
+  - bin: kubectl-pexec
+    uri: https://github.com/ssup2/kpexec/releases/download/v0.3.5/kubectl_pexec_v0.3.5_Linux_amd64.tar.gz
+    sha256: 5e994c3fa92cb04a8186ade04d4ec111182f72af45a2c515d7452d432c96acb8
+    selector:
+      matchLabels:
+        os: linux
+        arch: amd64

@@ -1,0 +1,16 @@
+apiVersion: ergo.ysicing.me/v1alpha1
+kind: PluginList
+metadata:
+  name: default
+spec:
+  list:
+  - name: docker
+  - name: go
+  - name: etcd
+  - name: consul
+  - name: mariadb
+  - name: redis
+  - name: mongo
+  - name: mysql
+  - name: postgres
+
