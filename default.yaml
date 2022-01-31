@@ -3,6 +3,7 @@ kind: PluginList
 metadata:
   name: default
 spec:
+  path: https://raw.githubusercontent.com/ysicing/ergo-index/master/plugins
   list:
   - name: docker
   - name: go
