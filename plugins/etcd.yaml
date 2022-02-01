@@ -7,4 +7,4 @@ spec:
   description: "Bitnami Docker Etcd"
   version: 3.5
   type: compose
-  compose: "bitnami/etcd:3.5"
+  url: "etcd/3.5/docker-compose.yml"

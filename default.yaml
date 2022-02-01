@@ -8,10 +8,10 @@ spec:
   - name: docker
   - name: go
   - name: etcd
-  - name: consul
-  - name: mariadb
-  - name: redis
-  - name: mongo
-  - name: mysql
-  - name: postgres
+  # - name: consul
+  # - name: mariadb
+  # - name: redis
+  # - name: mongo
+  # - name: mysql
+  # - name: postgres
 
