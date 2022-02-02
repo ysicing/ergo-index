@@ -1,0 +1,17 @@
+apiVersion: ergo.ysicing.me/v1alpha1
+kind: Plugin
+metadata:
+  name: compose
+spec:
+  homepage: https://github.com/docker/compose
+  description: "Define and run multi-container applications with Docker"
+  version: v2.2.3
+  type: bin
+  bin: docker-compose
+  platforms:
+    - os: linux
+      arch: amd64
+      url: https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-linux-x86_64
+    - os: darwin
+      arch: amd64 
+      url: https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-darwin-x86_64
