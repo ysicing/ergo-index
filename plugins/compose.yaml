@@ -7,7 +7,7 @@ spec:
   description: "Define and run multi-container applications with Docker"
   version: v2.2.3
   type: bin
-  bin: docker-compose
+  bin: compose
   platforms:
     - os: linux
       arch: amd64
