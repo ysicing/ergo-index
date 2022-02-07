@@ -6,6 +6,7 @@ spec:
   path: https://raw.githubusercontent.com/ysicing/ergo-index/master/plugins
   list:
   - name: docker
+  - name: dockerconfig
   - name: compose
   - name: go
   - name: etcd
