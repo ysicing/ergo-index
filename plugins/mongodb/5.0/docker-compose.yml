@@ -1,0 +1,21 @@
+version: '2.1'
+
+services:
+  mongodb:
+    image: docker.io/bitnami/mongodb:5.0
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - 'mongodb_data:/bitnami/mongodb'
+    environment:
+      # - ALLOW_EMPTY_PASSWORD=yes
+      # - MONGODB_SYSTEM_LOG_VERBOSITY=3
+      - MONGODB_ROOT_PASSWORD=password123
+      - MONGODB_USERNAME=ysicing
+      - MONGODB_PASSWORD=password123
+      - MONGODB_DATABASE=ysicing
+volumes:
+  mongodb_data:
+    driver: local

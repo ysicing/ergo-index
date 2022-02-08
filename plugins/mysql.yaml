@@ -1,0 +1,10 @@
+apiVersion: ergo.ysicing.me/v1alpha1
+kind: Plugin
+metadata:
+  name: mysql
+spec:
+  homepage: https://github.com/bitnami/bitnami-docker-mysql
+  description: "Bitnami Docker Mysql"
+  version: 5.7
+  type: compose
+  url: "mysql/5.7/docker-compose.yml"

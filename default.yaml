@@ -11,10 +11,10 @@ spec:
   - name: go
   - name: etcd
   - name: k3sx
-  # - name: consul
-  # - name: mariadb
-  # - name: redis
-  # - name: mongo
-  # - name: mysql
-  # - name: postgres
+  - name: consul
+  - name: mariadb
+  - name: redis
+  - name: mongodb
+  - name: mysql
+  - name: postgresql
 

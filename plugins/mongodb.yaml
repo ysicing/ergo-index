@@ -1,0 +1,10 @@
+apiVersion: ergo.ysicing.me/v1alpha1
+kind: Plugin
+metadata:
+  name: mongodb
+spec:
+  homepage: https://github.com/bitnami/bitnami-docker-mongodb
+  description: "Bitnami Docker MongoDB"
+  version: 5.0
+  type: compose
+  url: "mongodb/5.0/docker-compose.yml"

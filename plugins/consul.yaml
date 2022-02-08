@@ -1,0 +1,10 @@
+apiVersion: ergo.ysicing.me/v1alpha1
+kind: Plugin
+metadata:
+  name: consul
+spec:
+  homepage: https://github.com/bitnami/bitnami-docker-consul
+  description: "Bitnami Docker Consul"
+  version: 1
+  type: compose
+  url: "consul/docker-compose.yml"

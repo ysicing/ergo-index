@@ -2,6 +2,10 @@
 
 > 记录版本变更
 
+## 2022020815
+
+- 新增consul、mariadb、redis、mongodb、mysql、postgresql
+
 ## 2022020717
 
 - 调整docker安装
