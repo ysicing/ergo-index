@@ -17,4 +17,7 @@ spec:
   - name: mongodb
   - name: mysql
   - name: postgresql
+  - name: helm
+  - name: cilium
+  - name: istio
 

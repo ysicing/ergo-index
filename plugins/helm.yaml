@@ -1,0 +1,10 @@
+apiVersion: ergo.ysicing.me/v1alpha1
+kind: Plugin
+metadata:
+  name: helm
+spec:
+  homepage: https://github.com/docker/compose
+  description: "Define and run multi-container applications with Docker"
+  version: v3.8.0
+  type: curl
+  url: helm/install.sh

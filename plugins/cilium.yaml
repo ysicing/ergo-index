@@ -1,0 +1,10 @@
+apiVersion: ergo.ysicing.me/v1alpha1
+kind: Plugin
+metadata:
+  name: cilium
+spec:
+  homepage: https://docs.cilium.io/
+  description: "Cilium is a network policy based network security solution"
+  version: v1.11.1
+  type: curl
+  url: cilium/install.sh

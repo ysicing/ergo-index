@@ -1,0 +1,10 @@
+apiVersion: ergo.ysicing.me/v1alpha1
+kind: Plugin
+metadata:
+  name: istio
+spec:
+  homepage: https://github.com/istio/istio
+  description: "Istio is a platform for building, deploying, and managing microservices"
+  version: v1.11.6
+  type: curl
+  url: istio/install.sh
