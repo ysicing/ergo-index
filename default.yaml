@@ -20,4 +20,5 @@ spec:
   - name: helm
   - name: cilium
   - name: istio
+  - name: kubectl
 

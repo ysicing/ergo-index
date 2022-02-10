@@ -1,0 +1,10 @@
+apiVersion: ergo.ysicing.me/v1alpha1
+kind: Plugin
+metadata:
+  name: kubectl
+spec:
+  homepage: https://github.com/kubernetes/kubernetes
+  description: "Kubernetes is a platform for building, deploying, and managing microservices"
+  version: v1.23.3
+  type: curl
+  url: kubectl/install.sh
