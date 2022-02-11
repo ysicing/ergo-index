@@ -3,8 +3,8 @@ kind: Plugin
 metadata:
   name: helm
 spec:
-  homepage: https://github.com/docker/compose
-  description: "Define and run multi-container applications with Docker"
+  homepage: https://github.com/helm/helm
+  description: "Helm is a tool for managing Kubernetes releases."
   version: v3.8.0
   type: curl
   url: helm/install.sh

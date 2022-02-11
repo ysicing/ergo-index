@@ -2,6 +2,10 @@
 
 > 记录版本变更
 
+## 2022021113
+
+- 新增`nginx-ingress-controller`
+
 ## 2022021017
 
 - 新增`helm`, `istio`, `cilium`
