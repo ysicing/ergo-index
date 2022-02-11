@@ -6,6 +6,10 @@
 
 - 新增`nginx-ingress-controller`
 
+## 2022021021
+
+- 新增`kubectl`
+
 ## 2022021017
 
 - 新增`helm`, `istio`, `cilium`

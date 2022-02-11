@@ -21,4 +21,5 @@ spec:
   - name: cilium
   - name: istio
   - name: nginx-ingress-controller
+  - name: kubectl
 
