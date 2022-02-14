@@ -1,7 +1,7 @@
 apiVersion: ergo.ysicing.me/v1alpha1
 kind: Plugin
 metadata:
-  name: dockerconfig
+  name: dockercfg
 spec:
   homepage: https://get.docker.com/
   description: "Docker CE for Linux config script"
