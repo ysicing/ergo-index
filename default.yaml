@@ -22,4 +22,5 @@ spec:
   - name: istio
   - name: nginx-ingress-controller
   - name: kubectl
+  - name: k3d
 

@@ -1,0 +1,10 @@
+apiVersion: ergo.ysicing.me/v1alpha1
+kind: Plugin
+metadata:
+  name: etcdctl
+spec:
+  homepage: https://github.com/etcd-io/etcd
+  description: "Etcd is a highly available key value store for shared state"
+  version: 3.5.2
+  type: curl
+  url: etcd/etcdctl.sh
