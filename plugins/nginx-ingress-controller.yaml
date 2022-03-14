@@ -5,7 +5,7 @@ metadata:
 spec:
   homepage: https://github.com/bitnami/nginx-ingress-controller
   description: "Nginx Ingress Controller for Kubernetes"
-  version: 9.1.5
+  version: 9.1.11
   type: shell
   shell: |
     helm repo add bitnami https://charts.bitnami.com/bitnami
