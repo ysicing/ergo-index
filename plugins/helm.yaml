@@ -5,6 +5,6 @@ metadata:
 spec:
   homepage: https://github.com/helm/helm
   description: "Helm is a tool for managing Kubernetes releases."
-  version: v3.8.0
+  version: v3.8.1
   type: curl
   url: helm/install.sh
