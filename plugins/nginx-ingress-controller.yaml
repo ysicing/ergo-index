@@ -5,12 +5,14 @@ metadata:
 spec:
   homepage: https://github.com/bitnami/nginx-ingress-controller
   description: "Nginx Ingress Controller for Kubernetes"
-  version: 9.1.11
-  type: shell
-  shell: |
-    helm repo add bitnami https://charts.bitnami.com/bitnami
-    helm repo update
-    helm upgrade -i nginx-ingress-controller bitnami/nginx-ingress-controller -n kube-system --set ingressClassResource.default=true --set hostNetwork=true --set reportNodeInternalIp=true --set watchIngressWithoutClass=true
+  version: 9.1.12
+  type: curl
+  url: nginx-ingress-controller/nginx-ingress-controller.sh
+  # type: shell
+  # shell: |
+  #   helm repo add bitnami https://charts.bitnami.com/bitnami
+  #   helm repo update
+  #   helm upgrade -i nginx-ingress-controller bitnami/nginx-ingress-controller -n kube-system --set ingressClassResource.default=true --set hostNetwork=true --set reportNodeInternalIp=true --set watchIngressWithoutClass=true
   # shell: |
     #     apiVersion: v1
     # data:

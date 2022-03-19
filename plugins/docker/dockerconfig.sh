@@ -6,7 +6,7 @@ do_config() {
     [ -d "/etc/docker" ] || mkdir /etc/docker
     cat > /etc/docker/daemon.json <<EOF
 {
-  "registry-mirrors": ["https://dyucrs4l.mirror.aliyuncs.com"],
+  "registry-mirrors": ["https://mirror.ccs.tencentyun.com","https://dyucrs4l.mirror.aliyuncs.com"],
   "exec-opts": [
     "native.cgroupdriver=cgroupfs"
   ],

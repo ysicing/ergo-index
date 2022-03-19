@@ -2,6 +2,12 @@
 
 > 记录版本变更
 
+## 2022031911
+
+- `go`版本升级到1.18
+- `dockercfg`新增tcr mirror
+- `nginx-ingress-controller`版本升级到9.1.12
+
 ## 2022031423
 
 - `go`版本升级到1.17.8
