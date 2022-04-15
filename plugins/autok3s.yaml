@@ -1,0 +1,20 @@
+apiVersion: ergo.ysicing.me/v1alpha1
+kind: Plugin
+metadata:
+  name: autok3s
+spec:
+  homepage: https://github.com/cnrancher/autok3s
+  description: "AutoK3S is a tool for Kubernetes cluster auto-deployment"
+  version: v0.4.9
+  type: bin
+  bin: autok3s
+  platforms:
+    - os: linux
+      arch: amd64
+      url: https://github.com/cnrancher/autok3s/releases/download/v0.4.9/autok3s_linux_amd64
+    - os: darwin
+      arch: amd64 
+      url: https://github.com/cnrancher/autok3s/releases/download/v0.4.9/autok3s_darwin_amd64
+    - os: darwin
+      arch: arm64 
+      url: https://github.com/cnrancher/autok3s/releases/download/v0.4.9/autok3s_darwin_arm64

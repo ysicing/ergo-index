@@ -5,6 +5,6 @@ metadata:
 spec:
   homepage: https://github.com/kubernetes/kubernetes
   description: "Kubernetes is a platform for building, deploying, and managing microservices"
-  version: v1.23.4
+  version: v1.23.5
   type: curl
   url: kubectl/install.sh

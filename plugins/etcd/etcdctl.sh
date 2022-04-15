@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ETCD_VER=v3.5.2
+ETCD_VER=v3.5.3
 
 # choose either URL
 GOOGLE_URL=https://storage.googleapis.com/etcd
