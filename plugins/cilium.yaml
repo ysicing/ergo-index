@@ -5,6 +5,6 @@ metadata:
 spec:
   homepage: https://docs.cilium.io/
   description: "Cilium is a network policy based network security solution"
-  version: v1.11.3
+  version: v0.11.2
   type: curl
   url: cilium/install.sh

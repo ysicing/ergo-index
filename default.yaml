@@ -5,22 +5,28 @@ metadata:
 spec:
   path: https://raw.githubusercontent.com/ysicing/ergo-index/master/plugins
   list:
+  - name: autok3s
+  - name: cilium
+  - name: compose
+  - name: consul
+  - name: containerd
   - name: docker
   - name: dockerconfig
-  - name: compose
-  - name: go
   - name: etcd
+  - name: etcdctl
+  - name: go
+  - name: helm
+  - name: istio
+  - name: k3d
   - name: k3sx
-  - name: consul
+  - name: kind
+  - name: krew
+  - name: kubectl
   - name: mariadb
-  - name: redis
   - name: mongodb
   - name: mysql
-  - name: postgresql
-  - name: helm
-  - name: cilium
-  - name: istio
+  - name: nerdctl
   - name: nginx-ingress-controller
-  - name: kubectl
-  - name: k3d
-
+  - name: postgresql
+  - name: redis
+  
