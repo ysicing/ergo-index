@@ -1,0 +1,10 @@
+apiVersion: ergo.ysicing.me/v1alpha1
+kind: Plugin
+metadata:
+  name: nerdctl
+spec:
+  homepage: https://github.com/containerd/nerdctl
+  description: "Nerdctl is a command line tool for containerd."
+  version: v0.19.0
+  type: curl
+  url: containerd/nerdctl.sh

@@ -1,0 +1,10 @@
+apiVersion: ergo.ysicing.me/v1alpha1
+kind: Plugin
+metadata:
+  name: containerd
+spec:
+  homepage: https://github.com/containerd/containerd
+  description: "Containerd is a platform agnostic container runtime."
+  version: v1.6.3
+  type: curl
+  url: containerd/containerd.sh
