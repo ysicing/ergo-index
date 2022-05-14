@@ -5,6 +5,6 @@ metadata:
 spec:
   homepage: https://golang.google.cn/
   description: "Golang for Linux installation script"
-  version: 1.18.1
+  version: 1.18.2
   type: curl
   url: go/go.sh

@@ -5,13 +5,13 @@ metadata:
 spec:
   homepage: https://github.com/docker/compose
   description: "Define and run multi-container applications with Docker"
-  version: v2.4.1
+  version: v2.5.0
   type: bin
   bin: compose
   platforms:
     - os: linux
       arch: amd64
-      url: https://github.com/docker/compose/releases/download/v2.4.1/docker-compose-linux-x86_64
+      url: https://github.com/docker/compose/releases/download/v2.5.0/docker-compose-linux-x86_64
     - os: darwin
       arch: amd64 
-      url: https://github.com/docker/compose/releases/download/v2.4.1/docker-compose-darwin-x86_64
+      url: https://github.com/docker/compose/releases/download/v2.5.0/docker-compose-darwin-x86_64
