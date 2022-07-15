@@ -5,6 +5,6 @@ metadata:
 spec:
   homepage: https://github.com/istio/istio
   description: "Istio is a platform for building, deploying, and managing microservices"
-  version: v1.13.3
+  version: v1.14.1
   type: curl
   url: istio/install.sh

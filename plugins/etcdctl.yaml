@@ -5,6 +5,6 @@ metadata:
 spec:
   homepage: https://github.com/etcd-io/etcd
   description: "Etcd is a highly available key value store for shared state"
-  version: 3.5.4
+  version: 3.4.19
   type: curl
   url: etcd/etcdctl.sh
