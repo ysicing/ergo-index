@@ -1,8 +1,8 @@
 #!/bin/bash
 
-ergo ops wget https://github.com/containerd/containerd/releases/download/v1.6.6/cri-containerd-cni-1.6.6-linux-amd64.tar.gz
+ergo ops wget https://github.com/containerd/containerd/releases/download/v1.6.14/cri-containerd-cni-1.6.14-linux-amd64.tar.gz
 
-tar -C / -xzf /root/.ergo/cache/cri-containerd-cni-1.6.6-linux-amd64.tar.gz
+tar -C / -xzf /root/.ergo/cache/cri-containerd-cni-1.6.14-linux-amd64.tar.gz
 
 systemctl enable containerd.service
 

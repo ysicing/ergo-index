@@ -5,6 +5,6 @@ metadata:
 spec:
   homepage: https://github.com/containerd/containerd
   description: "Containerd is a platform agnostic container runtime."
-  version: v1.6.6
+  version: v1.6.14
   type: curl
   url: containerd/containerd.sh

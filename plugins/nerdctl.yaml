@@ -5,6 +5,6 @@ metadata:
 spec:
   homepage: https://github.com/containerd/nerdctl
   description: "Nerdctl is a command line tool for containerd."
-  version: v0.21.0
+  version: v1.1.0
   type: curl
   url: containerd/nerdctl.sh
