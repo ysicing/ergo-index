@@ -19,7 +19,7 @@ set -e
 #
 # Git commit from https://github.com/docker/docker-install when
 # the script was uploaded (Should only be modified by upload job):
-SCRIPT_COMMIT_SHA="93d2499759296ac1f9c510605fef85052a2c32be"
+SCRIPT_COMMIT_SHA="66474034547a96caa0a25be56051ff8b726a1b28"
 
 # strip "v" prefix if present
 VERSION="${VERSION#v}"
@@ -34,7 +34,7 @@ if [ -z "$CHANNEL" ]; then
 	CHANNEL=$DEFAULT_CHANNEL_VALUE
 fi
 
-DEFAULT_DOWNLOAD_URL="https://mirrors.aliyun.com/docker-ce"
+DEFAULT_DOWNLOAD_URL="https://mirrors.cloud.tencent.com/docker-ce"
 if [ -z "$DOWNLOAD_URL" ]; then
 	DOWNLOAD_URL=$DEFAULT_DOWNLOAD_URL
 fi
@@ -69,9 +69,6 @@ case "$mirror" in
 	AzureChinaCloud)
 		DOWNLOAD_URL="https://mirror.azure.cn/docker-ce"
 		;;
-    Origin)
-        DOWNLOAD_URL="https://download.docker.com"
-        ;;    
 esac
 
 command_exists() {
@@ -396,14 +393,16 @@ do_install() {
 			if ! command -v gpg > /dev/null; then
 				pre_reqs="$pre_reqs gnupg"
 			fi
-			apt_repo="deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] $DOWNLOAD_URL/linux/$lsb_dist $dist_version $CHANNEL"
+			apt_repo="deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] $DOWNLOAD_URL/linux/$lsb_dist $dist_version $CHANNEL"
 			(
 				if ! is_dry_run; then
 					set -x
 				fi
 				$sh_c 'apt-get update -qq >/dev/null'
 				$sh_c "DEBIAN_FRONTEND=noninteractive apt-get install -y -qq $pre_reqs >/dev/null"
-				$sh_c "curl -fsSL \"$DOWNLOAD_URL/linux/$lsb_dist/gpg\" | gpg --dearmor --yes -o /usr/share/keyrings/docker-archive-keyring.gpg"
+				$sh_c 'mkdir -p /etc/apt/keyrings && chmod -R 0755 /etc/apt/keyrings'
+				$sh_c "curl -fsSL \"$DOWNLOAD_URL/linux/$lsb_dist/gpg\" | gpg --dearmor --yes -o /etc/apt/keyrings/docker.gpg"
+				$sh_c "chmod a+r /etc/apt/keyrings/docker.gpg"
 				$sh_c "echo \"$apt_repo\" > /etc/apt/sources.list.d/docker.list"
 				$sh_c 'apt-get update -qq >/dev/null'
 			)
@@ -413,7 +412,7 @@ do_install() {
 					echo "# WARNING: VERSION pinning is not supported in DRY_RUN"
 				else
 					# Will work for incomplete versions IE (17.12), but may not actually grab the "latest" if in the test channel
-					pkg_pattern="$(echo "$VERSION" | sed "s/-ce-/~ce~.*/g" | sed "s/-/.*/g").*-0~$lsb_dist"
+					pkg_pattern="$(echo "$VERSION" | sed "s/-ce-/~ce~.*/g" | sed "s/-/.*/g")"
 					search_command="apt-cache madison 'docker-ce' | grep '$pkg_pattern' | head -1 | awk '{\$1=\$1};1' | cut -d' ' -f 3"
 					pkg_version="$($sh_c "$search_command")"
 					echo "INFO: Searching repository for VERSION '$VERSION'"
@@ -433,24 +432,25 @@ do_install() {
 				fi
 			fi
 			(
-				pkgs=""
+				pkgs="docker-ce${pkg_version%=}"
 				if version_gte "18.09"; then
-						# older versions don't support a cli package
-						pkgs="$pkgs docker-ce-cli${cli_pkg_version%=}"
+						# older versions didn't ship the cli and containerd as separate packages
+						pkgs="$pkgs docker-ce-cli${cli_pkg_version%=} containerd.io"
 				fi
 				if version_gte "20.10" && [ "$(uname -m)" = "x86_64" ]; then
 						# also install the latest version of the "docker scan" cli-plugin (only supported on x86 currently)
 						pkgs="$pkgs docker-scan-plugin"
 				fi
-				pkgs="$pkgs docker-ce${pkg_version%=}"
+				if version_gte "20.10"; then
+						pkgs="$pkgs docker-compose-plugin docker-ce-rootless-extras$pkg_version"
+				fi
+				if version_gte "23.0"; then
+						pkgs="$pkgs docker-buildx-plugin"
+				fi
 				if ! is_dry_run; then
 					set -x
 				fi
-				$sh_c "DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends $pkgs >/dev/null"
-				if version_gte "20.10"; then
-					# Install docker-ce-rootless-extras without "--no-install-recommends", so as to install slirp4netns when available
-					$sh_c "DEBIAN_FRONTEND=noninteractive apt-get install -y -qq docker-ce-rootless-extras${pkg_version%=} >/dev/null"
-				fi
+				$sh_c "DEBIAN_FRONTEND=noninteractive apt-get install -y -qq $pkgs >/dev/null"
 			)
 			echo_docker_as_nonroot
 			exit 0
@@ -458,11 +458,6 @@ do_install() {
 		centos|fedora|rhel)
 			if [ "$(uname -m)" != "s390x" ] && [ "$lsb_dist" = "rhel" ]; then
 				echo "Packages for RHEL are currently only available for s390x."
-				exit 1
-			fi
-			yum_repo="$DOWNLOAD_URL/linux/$lsb_dist/$REPO_FILE"
-			if ! curl -Ifs "$yum_repo" > /dev/null; then
-				echo "Error: Unable to curl repository file $yum_repo, is it valid?"
 				exit 1
 			fi
 			if [ "$lsb_dist" = "fedora" ]; then
@@ -480,12 +475,13 @@ do_install() {
 				pre_reqs="yum-utils"
 				pkg_suffix="el"
 			fi
+			repo_file_url="$DOWNLOAD_URL/linux/$lsb_dist/$REPO_FILE"
 			(
 				if ! is_dry_run; then
 					set -x
 				fi
 				$sh_c "$pkg_manager install -y -q $pre_reqs"
-				$sh_c "$config_manager --add-repo $yum_repo"
+				$sh_c "$config_manager --add-repo $repo_file_url"
 
 				if [ "$CHANNEL" != "stable" ]; then
 					$sh_c "$config_manager $disable_channel_flag docker-ce-*"
@@ -519,17 +515,29 @@ do_install() {
 				fi
 			fi
 			(
+				pkgs="docker-ce$pkg_version"
+				if version_gte "18.09"; then
+					# older versions didn't ship the cli and containerd as separate packages
+					if [ -n "$cli_pkg_version" ]; then
+						pkgs="$pkgs docker-ce-cli-$cli_pkg_version containerd.io"
+					else
+						pkgs="$pkgs docker-ce-cli containerd.io"
+					fi
+				fi
+				if version_gte "20.10" && [ "$(uname -m)" = "x86_64" ]; then
+						# also install the latest version of the "docker scan" cli-plugin (only supported on x86 currently)
+						pkgs="$pkgs docker-scan-plugin"
+				fi
+				if version_gte "20.10"; then
+					pkgs="$pkgs docker-compose-plugin docker-ce-rootless-extras$pkg_version"
+				fi
+				if version_gte "23.0"; then
+						pkgs="$pkgs docker-buildx-plugin"
+				fi
 				if ! is_dry_run; then
 					set -x
 				fi
-				# install the correct cli version first
-				if [ -n "$cli_pkg_version" ]; then
-					$sh_c "$pkg_manager install -y -q docker-ce-cli-$cli_pkg_version"
-				fi
-				$sh_c "$pkg_manager install -y -q docker-ce$pkg_version"
-				if version_gte "20.10"; then
-					$sh_c "$pkg_manager install -y -q docker-ce-rootless-extras$pkg_version"
-				fi
+				$sh_c "$pkg_manager install -y -q $pkgs"
 			)
 			echo_docker_as_nonroot
 			exit 0
@@ -539,21 +547,21 @@ do_install() {
 				echo "Packages for SLES are currently only available for s390x"
 				exit 1
 			fi
-
-			sles_version="${dist_version##*.}"
-			sles_repo="$DOWNLOAD_URL/linux/$lsb_dist/$REPO_FILE"
-			opensuse_repo="https://download.opensuse.org/repositories/security:SELinux/SLE_15_SP$sles_version/security:SELinux.repo"
-			if ! curl -Ifs "$sles_repo" > /dev/null; then
-				echo "Error: Unable to curl repository file $sles_repo, is it valid?"
-				exit 1
+			if [ "$dist_version" = "15.3" ]; then
+				sles_version="SLE_15_SP3"
+			else
+				sles_minor_version="${dist_version##*.}"
+				sles_version="15.$sles_minor_version"
 			fi
+			opensuse_repo="https://download.opensuse.org/repositories/security:SELinux/$sles_version/security:SELinux.repo"
+			repo_file_url="$DOWNLOAD_URL/linux/$lsb_dist/$REPO_FILE"
 			pre_reqs="ca-certificates curl libseccomp2 awk"
 			(
 				if ! is_dry_run; then
 					set -x
 				fi
 				$sh_c "zypper install -y $pre_reqs"
-				$sh_c "zypper addrepo $sles_repo"
+				$sh_c "zypper addrepo $repo_file_url"
 				if ! is_dry_run; then
 						cat >&2 <<-'EOF'
 						WARNING!!
@@ -587,24 +595,28 @@ do_install() {
 					# It's okay for cli_pkg_version to be blank, since older versions don't support a cli package
 					cli_pkg_version="$($sh_c "$search_command")"
 					pkg_version="-$pkg_version"
-
-					search_command="zypper search -s --match-exact 'docker-ce-rootless-extras' | grep '$pkg_pattern' | tail -1 | awk '{print \$6}'"
-					rootless_pkg_version="$($sh_c "$search_command")"
-					rootless_pkg_version="-$rootless_pkg_version"
 				fi
 			fi
 			(
+				pkgs="docker-ce$pkg_version"
+				if version_gte "18.09"; then
+					if [ -n "$cli_pkg_version" ]; then
+						# older versions didn't ship the cli and containerd as separate packages
+						pkgs="$pkgs docker-ce-cli-$cli_pkg_version containerd.io"
+					else
+						pkgs="$pkgs docker-ce-cli containerd.io"
+					fi
+				fi
+				if version_gte "20.10"; then
+					pkgs="$pkgs docker-compose-plugin docker-ce-rootless-extras$pkg_version"
+				fi
+				if version_gte "23.0"; then
+						pkgs="$pkgs docker-buildx-plugin"
+				fi
 				if ! is_dry_run; then
 					set -x
 				fi
-				# install the correct cli version first
-				if [ -n "$cli_pkg_version" ]; then
-					$sh_c "zypper install -y  docker-ce-cli-$cli_pkg_version"
-				fi
-				$sh_c "zypper install -y docker-ce$pkg_version"
-				if version_gte "20.10"; then
-					$sh_c "zypper install -y docker-ce-rootless-extras$rootless_pkg_version"
-				fi
+				$sh_c "zypper -q install -y $pkgs"
 			)
 			echo_docker_as_nonroot
 			exit 0
